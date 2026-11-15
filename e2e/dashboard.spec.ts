@@ -39,9 +39,17 @@ test('morning flow: today panel, tick a task, pipeline, company page, search', a
   await expect(page.getByText('Not applied').first()).toBeVisible();
 
   // Search across every log.
-  await page.getByRole('searchbox', { name: 'Search every log' }).fill('does not support relocation');
+  await page.getByRole('searchbox', { name: 'Search every log' }).fill('"does not support relocation"');
   await page.keyboard.press('Enter');
   await expect(page.getByRole('link', { name: /Brightwave Energy . Data Infrastructure Engineer/ })).toBeVisible();
+
+  // A quoted phrase is highlighted in the results as one piece.
+  await expect(page.locator('main mark').first()).toHaveText(/does not support relocation/i);
+
+  // Case and accents do not matter, and every word of a multi-word query is marked.
+  await page.getByRole('searchbox', { name: 'Search query' }).fill('ostra mobility');
+  await expect(page.locator('main mark', { hasText: /^Östra$/ }).first()).toBeVisible();
+  await expect(page.locator('main mark', { hasText: /^Mobility$/ }).first()).toBeVisible();
 });
 
 test('stats page renders the weekly chart and the group tables', async ({ page }) => {

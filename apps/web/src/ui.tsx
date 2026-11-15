@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import remarkGfm from 'remark-gfm';
 import { CHANNEL_LABELS, REGION_LABELS, STATUS_LABELS, formatDay, type Application, type EventKind, type FuzzyDate, type Status } from '@jobpilot/shared';
 
+import { splitByMatches } from './highlight';
+
 export function cx(...parts: Array<string | false | null | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
@@ -124,6 +126,15 @@ export function Markdown({ children, className }: { children: string; className?
         {children}
       </ReactMarkdown>
     </div>
+  );
+}
+
+/** Text with every occurrence of the search terms wrapped in <mark>. */
+export function Highlight({ text, terms }: { text: string; terms: readonly string[] }) {
+  return (
+    <>
+      {splitByMatches(text, terms).map((piece, index) => (piece.match ? <mark key={index}>{piece.text}</mark> : piece.text))}
+    </>
   );
 }
 

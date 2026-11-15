@@ -27,6 +27,7 @@
   --ramp-1: #cde2fb;
   --ramp-2: #86b6ef;
   --ramp-3: #2a78d6;
+  --mark: #ffe58a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -53,6 +54,7 @@
     --ramp-1: #184f95;
     --ramp-2: #256abf;
     --ramp-3: #3987e5;
+    --mark: #6b5600;
   }
 }
 
@@ -90,6 +92,14 @@ body {
   font-size: 14px;
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Search matches. Ink stays the normal text colour, so contrast is the same as unhighlighted text. */
+mark {
+  background: var(--mark);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 1px;
 }
 
 :focus-visible {
