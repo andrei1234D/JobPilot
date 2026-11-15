@@ -1,0 +1,13 @@
+packages:
+  - "packages/*"
+  - "apps/*"
+
+# pnpm 10 only runs install scripts for packages listed here.
+onlyBuiltDependencies:
+  - electron
+  - esbuild
+
+overrides:
+  # light-my-request >= 6.7 pulls in an ESM-only `cookie`, which needs require(esm)
+  # (Node >= 20.19). Pinning keeps `fastify.inject` working on every Node 20 release.
+  light-my-request: ~6.6.0

@@ -1,0 +1,34 @@
+{
+  "name": "jobpilot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first cockpit for a job hunt that lives in Markdown logs: dashboard, rules engine, browser extension and desktop app.",
+  "license": "MIT",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @jobpilot/server --filter @jobpilot/web dev",
+    "build": "pnpm -r build",
+    "start": "pnpm --filter @jobpilot/web build && pnpm --filter @jobpilot/server start",
+    "desktop": "pnpm --filter @jobpilot/web build && pnpm --filter @jobpilot/desktop start",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "test": "pnpm -r test",
+    "e2e": "playwright test",
+    "screenshots": "playwright test --grep @screenshots",
+    "check": "pnpm typecheck && pnpm lint && pnpm test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^20.17.10",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "globals": "^15.14.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.2"
+  }
+}

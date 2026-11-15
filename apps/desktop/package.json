@@ -1,0 +1,66 @@
+{
+  "name": "@jobpilot/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "JobPilot as a Windows desktop app: the same server and React UI inside Electron, with a tray icon and a morning notification.",
+  "author": "Andrei Balas",
+  "main": "dist/main.cjs",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node build.mjs && electron .",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests",
+    "pack": "node build.mjs && electron-builder --dir",
+    "dist": "node build.mjs && electron-builder"
+  },
+  "devDependencies": {
+    "@jobpilot/server": "workspace:*",
+    "@jobpilot/shared": "workspace:*",
+    "@types/node": "^20.17.10",
+    "electron": "^33.3.1",
+    "electron-builder": "^25.1.8",
+    "esbuild": "^0.24.2",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.5"
+  },
+  "build": {
+    "appId": "dev.jobpilot.desktop",
+    "productName": "JobPilot",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../web/dist",
+        "to": "web"
+      },
+      {
+        "from": "../../sample-data",
+        "to": "sample-data"
+      },
+      {
+        "from": "assets",
+        "to": "assets"
+      }
+    ],
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "JobPilot-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "JobPilot-Portable-${version}.${ext}"
+    }
+  }
+}

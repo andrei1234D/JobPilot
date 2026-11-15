@@ -1,0 +1,4 @@
+{
+  "description": "Invented sample data for JobPilot. The clock is pinned to `today` whenever this folder is the data source, so the demo and the tests always show the same follow-ups.",
+  "today": "2026-11-15"
+}

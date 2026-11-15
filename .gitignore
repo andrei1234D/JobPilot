@@ -1,0 +1,27 @@
+node_modules/
+dist/
+dist-e2e/
+release/
+*.tsbuildinfo
+.vite/
+coverage/
+playwright-report/
+test-results/
+
+# Local settings and real job-hunt data never belong in this repo.
+.env
+.env.*
+!.env.example
+settings.local.json
+/data/
+/private/
+*.local.md
+shortlist.json
+jobpilot-state.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
