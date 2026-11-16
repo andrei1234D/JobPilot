@@ -90,13 +90,15 @@ export function useSetChecked() {
     mutationFn: (input: { id: string; checked: boolean }) =>
       request(z.object({ checked: z.array(z.string()) }), '/api/checks', { method: 'PUT', body: JSON.stringify(input) }),
     // Optimistic: a checkbox that waits for the network feels broken.
-    onMutate: async ({ id, checked }) => {
-      await client.cancelQueries({ queryKey: ['today'] });
+    onMutate: ({ id, checked }) => {
+      // Synchronous, so the checkbox flips in the same render as the click. An in-flight refetch is
+      // cancelled without reverting, or its stale answer would overwrite the tick.
       const previous = client.getQueryData<Today>(['today']);
       if (previous) {
         const next = checked ? [...new Set([...previous.checked, id])] : previous.checked.filter((item) => item !== id);
         client.setQueryData<Today>(['today'], { ...previous, checked: next });
       }
+      void client.cancelQueries({ queryKey: ['today'] }, { revert: false });
       return { previous };
     },
     onError: (_error, _input, context) => {
